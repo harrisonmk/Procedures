@@ -1,0 +1,81 @@
+
+-- cria o banco de dados chamado teste
+create database teste;
+
+
+-- seleciona o banco de dados a ser usado
+use teste;
+
+-- cria a tabela pessoa
+create table pessoa(
+
+id_pessoa int not null primary key auto_increment,
+nome_pessoa varchar(50),
+cpf_pessoa varchar(14)
+
+);
+
+-- metodo para inserir
+delimiter $$
+create procedure inserir(in nome varchar(50),in cpf varchar(14))
+
+begin
+ 
+ insert into pessoa (nome_pessoa,cpf_pessoa) values (nome,cpf);
+ 
+ 
+end $$
+delimiter ; 
+
+
+-- metodo para excluir
+delimiter $$
+create procedure excluir(in id int)
+
+begin
+ 
+ 
+ delete from pessoa where id_pessoa =id; 
+ 
+ 
+end $$
+delimiter ; 
+
+
+-- metodo para alterar um banco
+delimiter $$
+create procedure alterar(in nome varchar(50), in cpf varchar(50),in id int)
+begin
+
+update pessoa set nome_pessoa=nome,cpf_pessoa=cpf where id_pessoa=id;
+
+end $$
+delimiter ;
+
+delimiter $$
+create procedure mostrar ()
+begin
+
+select  nome_pessoa as Nome,cpf_pessoa as CPF from pessoa;
+
+end $$
+
+delimiter ;
+
+
+-- chama a funçao de inserir
+call inserir('Harrison Mitchell','052.295.721-82');
+call inserir('maria joana','093.345.234-14');
+call inserir('Ana julia','024.456.734-83');
+
+-- chama o metodo de excluir
+call excluir('2');
+call excluir('1');
+
+-- chama o metodo para alterar um campo na tabela passando nome,cpf,id
+call alterar('gabriel','024.324.224-24','2');
+
+-- metodo para dar um select na tabela pessoa
+call mostrar();
+
+
